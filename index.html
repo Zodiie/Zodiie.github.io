@@ -1,142 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💎 TIRED PREMIUM 💎</title>
-    <style>
-        /* [Keep all your existing CSS styles exactly as they are] */
-    </style>
-</head>
-<body>
-    <!-- Star Background -->
-    <div class="stars" id="starsContainer"></div>
+<script>
+  // 1. Star animation (unchanged)
+  function createStars() {
+    const container = document.getElementById('starsContainer');
+    for (let i = 0; i < 200; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.width = `${Math.random() * 3 + 2}px`;
+      star.style.height = star.style.width;
+      star.style.setProperty('--duration', `${Math.random() * 5 + 3}s`);
+      star.style.opacity = Math.random();
+      container.appendChild(star);
+    }
+  }
+
+  // 2. Generate random redemption code 
+  function generateCode() {
+    return 'TP-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+  }
+
+  // 3. Handle successful payment
+  async function handlePaymentSuccess(details, code, planType) {
+    try {
+      const response = await fetch('https://zodiiegithubio-production.up.railway.app/generate-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: details.payer.email_address,
+          code: code,
+          plan: planType,
+          transaction_id: details.id
+        })
+      });
+
+      if (!response.ok) throw new Error('Backend error');
+      
+      alert(`✅ Payment successful!\nYour code: ${code}\nRedeem in Discord: !redeem ${code}`);
+    } catch (error) {
+      console.error('Payment processing failed:', error);
+      alert('⚠️ Payment processed but code generation failed. Contact support with your PayPal transaction ID.');
+    }
+  }
+
+  // 4. PayPal Smart Buttons
+  function setupPayPalButtons() {
+    // Weekly Plan ($4.99)
+    paypal.Buttons({
+      style: {
+        color: 'blue',
+        shape: 'rect',
+        label: 'pay'
+      },
+      createOrder: (data, actions) => {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: '4.99',
+              currency_code: 'USD'
+            },
+            description: 'Weekly Premium Access'
+          }]
+        });
+      },
+      onApprove: (data, actions) => {
+        return actions.order.capture().then(details => {
+          const code = generateCode();
+          handlePaymentSuccess(details, code, 'weekly');
+        });
+      },
+      onError: (err) => {
+        console.error('PayPal error:', err);
+        alert('Payment failed. Please try again or contact support.');
+      }
+    }).render('#paypal-button-container-weekly');
+
+    // Lifetime Plan ($9.99)
+    paypal.Buttons({
+      style: {
+        color: 'gold',
+        shape: 'pill',
+        label: 'pay'
+      },
+      createOrder: (data, actions) => {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: '9.99',
+              currency_code: 'USD'
+            },
+            description: 'Lifetime Premium Access'
+          }]
+        });
+      },
+      onApprove: (data, actions) => {
+        return actions.order.capture().then(details => {
+          const code = generateCode();
+          handlePaymentSuccess(details, code, 'lifetime');
+        });
+      }
+    }).render('#paypal-button-container-lifetime');
+  }
+
+  // 5. Initialize everything
+  function init() {
+    createStars();
     
-    <!-- Header -->
-    <header class="header">
-        <h1>💎 TIRED PREMIUM 💎</h1>
-        <a href="https://discord.gg/euW2wjvjYJ" class="top-discord-btn">  <!-- Updated Discord link -->
-            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord" width="24" height="24">
-            Discord
-        </a>
-    </header>
+    // Load PayPal SDK with YOUR SANDBOX ID
+    const script = document.createElement('script');
+    script.src = 'https://www.paypal.com/sdk/js?client-id=MTY9VCDR7FVQS&currency=USD';
+    script.onload = setupPayPalButtons;
+    script.onerror = () => alert('Failed to load PayPal. Check your connection.');
+    document.head.appendChild(script);
+  }
 
-    <!-- Main Content -->
-    <div class="sections-container">
-        <!-- Weekly Section -->
-        <div class="premium-section">
-            <h2 class="section-title">💎 TIRED PREMIUM 💎</h2>
-            <p class="section-subtitle">weekly</p>
-            <div class="price">$4.99</div>
-            <div id="paypal-button-container-weekly"></div>
-        </div>
-
-        <!-- Lifetime Section -->
-        <div class="premium-section lifetime-section">
-            <h2 class="section-title">💎 TIRED PREMIUM 💎</h2>
-            <p class="section-subtitle">lifetime</p>
-            <div class="price">$9.99</div>
-            <div id="paypal-button-container-lifetime"></div>
-        </div>
-    </div>
-
-    <script>
-        // 1. Star animation
-        function createStars() {
-            const container = document.getElementById('starsContainer');
-            for (let i = 0; i < 200; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.width = `${Math.random() * 3 + 2}px`;
-                star.style.height = star.style.width;
-                star.style.setProperty('--duration', `${Math.random() * 5 + 3}s`);
-                star.style.opacity = Math.random();
-                container.appendChild(star);
-            }
-        }
-
-        // 2. Generate random redemption code (e.g., "TP-5H9X2L")
-        function generateCode() {
-            return 'TP-' + Math.random().toString(36).substr(2, 6).toUpperCase();
-        }
-
-        // 3. Handle successful payment (send code to backend + user)
-        async function handlePaymentSuccess(details, code, planType) {
-            // Updated with your Railway URL
-            const response = await fetch('https://zodiiegithubio-production.up.railway.app/generate-code', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email: details.payer.email_address,
-                    code: code,
-                    plan: planType,
-                    transaction_id: details.id
-                })
-            });
-
-            if (response.ok) {
-                alert(`Payment successful! Your code: ${code}\nRedeem in Discord via: !redeem ${code}`);
-            } else {
-                alert("Payment succeeded but code generation failed. Contact support.");
-            }
-        }
-
-        // 4. PayPal Smart Buttons
-        function setupPayPalButtons() {
-            // Weekly Plan
-            paypal.Buttons({
-                style: {
-                    color: 'blue',
-                    shape: 'rect',
-                    label: 'pay'
-                },
-                createOrder: (data, actions) => actions.order.create({
-                    purchase_units: [{
-                        amount: { value: '4.99' },
-                        description: 'Weekly Premium Access',
-                        custom_id: "weekly_sub"
-                    }]
-                }),
-                onApprove: (data, actions) => actions.order.capture().then(details => {
-                    const code = generateCode();
-                    handlePaymentSuccess(details, code, 'weekly');
-                })
-            }).render('#paypal-button-container-weekly');
-
-            // Lifetime Plan
-            paypal.Buttons({
-                style: {
-                    color: 'gold',
-                    shape: 'pill',
-                    label: 'pay'
-                },
-                createOrder: (data, actions) => actions.order.create({
-                    purchase_units: [{
-                        amount: { value: '9.99' },
-                        description: 'Lifetime Premium Access',
-                        custom_id: "lifetime_sub"
-                    }]
-                }),
-                onApprove: (data, actions) => actions.order.capture().then(details => {
-                    const code = generateCode();
-                    handlePaymentSuccess(details, code, 'lifetime');
-                })
-            }).render('#paypal-button-container-lifetime');
-        }
-
-        // 5. Load PayPal SDK and initialize
-        function init() {
-            createStars();
-            const script = document.createElement('script');
-            // IMPORTANT: You still need to add your PayPal Client ID here!
-            script.src = `https://www.paypal.com/sdk/js?client-id=MTY9VCDR7FVQS_ID&currency=USD`;
-            script.onload = setupPayPalButtons;
-            document.head.appendChild(script);
-        }
-
-        init();
-    </script>
-</body>
-</html>
+  // Start the app
+  init();
+</script>
