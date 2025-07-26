@@ -313,6 +313,22 @@
             opacity: 1;
             transform: translateX(-50%) translateY(-10px);
         }
+
+        /* Verification Popup */
+        .verification-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(20, 20, 30, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            z-index: 1002;
+            display: none;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 0, 0.5);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -359,15 +375,14 @@
             <div class="important-note">
                 <p class="warning-text">⚠️ IMPORTANT: You MUST follow these instructions exactly:</p>
                 <p>1. Send payment via <span class="highlight">PayPal Friends & Family</span> only</p>
-                <p>2. Include your <span class="highlight">exact Discord username (username#1234)</span> in the payment note</p>
-                <p>3. After payment, <span class="highlight">open a ticket in our Discord</span> and include the email used for payment</p>
+                <p>2. After payment, <span class="highlight">open a ticket in our Discord</span> with your PayPal email</p>
             </div>
             
             <p style="text-align: center; font-size: 1.2rem;">Send <span id="paymentAmount">$4.99</span> via PayPal to:</p>
             <p style="text-align: center; font-size: 1.5rem; margin: 15px 0; word-break: break-all; color: #7289DA;">zodienr3@gmail.com</p>
             
             <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
-                <button class="btn buy-btn" onclick="copyToClipboard(); verifyPayment()" style="flex: 1;">
+                <button class="btn buy-btn" onclick="verifyPayment()" style="flex: 1;">
                     I've Sent Payment
                 </button>
                 <button class="btn" onclick="hideModal()" style="flex: 1; background: linear-gradient(135deg, #ff0000, #aa0000);">
@@ -379,6 +394,16 @@
 
     <!-- Toast Notification -->
     <div id="toast" class="toast">Transaction ID copied to clipboard!</div>
+
+    <!-- Verification Popup -->
+    <div id="verificationPopup" class="verification-popup">
+        <h3 style="margin-bottom: 20px; color: #00ff00;">Verifying Payment...</h3>
+        <p>Please wait while we verify your payment.</p>
+        <p>This may take a few moments.</p>
+        <div style="margin-top: 20px;">
+            <div class="loader" style="border: 5px solid #f3f3f3; border-top: 5px solid #00ff00; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+        </div>
+    </div>
 
     <script>
         // Create star background
@@ -397,17 +422,10 @@
             }
         }
 
-        // Generate random code
-        function generateCode(planType) {
-            const prefix = planType === 'weekly' ? 'TPW-' : 'TPL-';
-            return prefix + Math.random().toString(36).substr(2, 6).toUpperCase();
-        }
-
         // Show payment modal
         function showPaymentModal(planType) {
             const modal = document.getElementById('paymentModal');
             const paymentAmount = document.getElementById('paymentAmount');
-            const paymentCode = document.getElementById('paymentCode');
             
             // Set amount based on plan
             paymentAmount.textContent = planType === 'weekly' ? '$4.99' : '$9.99';
@@ -421,40 +439,19 @@
             document.getElementById('paymentModal').style.display = 'none';
         }
 
-        // Copy to clipboard function
-        function copyToClipboard() {
-            const codeElement = document.getElementById('paymentCode');
-            const code = codeElement.textContent;
-            
-            navigator.clipboard.writeText(code).then(() => {
-                showToast();
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-                // Fallback for older browsers
-                const textarea = document.createElement('textarea');
-                textarea.value = code;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                showToast();
-            });
-        }
-
-        // Show toast notification
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            
+        // Show verification popup
+        function showVerification() {
+            document.getElementById('verificationPopup').style.display = 'block';
             setTimeout(() => {
-                toast.classList.remove('show');
+                document.getElementById('verificationPopup').style.display = 'none';
+                alert('Payment verification initiated! Please open a ticket in our Discord with your PayPal email.');
+                hideModal();
             }, 3000);
         }
 
-        // Verify payment (placeholder function)
+        // Verify payment function
         function verifyPayment() {
-            alert('After sending payment, join our Discord and open a ticket with your PayPal transaction ID and payment email.');
-            hideModal();
+            showVerification();
         }
 
         // Initialize
