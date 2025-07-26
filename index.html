@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💎 Tired Premium 💎</title>
     <style>
-        /* ===== BASE STYLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -13,7 +12,7 @@
         }
         
         body {
-            height: 100vh;
+            min-height: 150vh;
             background: #000;
             color: #fff;
             font-family: 'Arial', sans-serif;
@@ -21,7 +20,7 @@
             position: relative;
         }
 
-        /* ===== STAR BACKGROUND ===== */
+        /* Cosmic Stars */
         .stars {
             position: fixed;
             top: 0;
@@ -36,17 +35,22 @@
             position: absolute;
             background: #fff;
             border-radius: 50%;
-            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.7);
+            animation: twinkle var(--duration) infinite ease-in-out;
         }
 
-        /* ===== HEADER ===== */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        /* Neon Header */
         .header {
             position: relative;
-            height: 20vh;
+            height: 30vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 5vh;
         }
 
         .header h1 {
@@ -56,83 +60,214 @@
             font-weight: 900;
             color: #fff;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
-            padding: 20px 40px;
+            padding: 25px 50px;
             border: 3px solid rgba(255, 255, 255, 0.7);
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
             background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
         }
 
-        /* ===== TOP DISCORD BUTTON ===== */
+        /* Glowing Discord Button */
         .top-discord-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #5865F2, #7289DA, #4752c4);
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #5865F2, #7289DA);
             color: white;
             text-decoration: none;
-            padding: 12px 24px;
+            padding: 15px 30px;
             font-size: 1.2rem;
             border-radius: 8px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 0 15px rgba(88, 101, 242, 0.6);
+            gap: 10px;
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.6);
             transition: all 0.3s;
-            z-index: 10;
+            z-index: 100;
         }
 
         .top-discord-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(88, 101, 242, 0.8);
+            box-shadow: 0 0 30px rgba(88, 101, 242, 0.9);
         }
 
-        /* ===== BUTTONS ===== */
+        /* Holographic Sections */
+        .sections-container {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            padding: 10vh 15%;
+            margin-bottom: 100px;
+        }
+
+        .premium-section {
+            position: relative;
+            border-radius: 16px;
+            padding: 40px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 60, 255, 0.6);
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .premium-section::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, 
+                rgba(10, 26, 94, 0.8), 
+                rgba(26, 74, 181, 0.8), 
+                rgba(0, 98, 196, 0.8));
+            z-index: -1;
+            animation: gradientPulse 8s ease infinite;
+            border-radius: 18px;
+        }
+
+        .lifetime-section::before {
+            background: linear-gradient(135deg, 
+                rgba(74, 13, 138, 0.8), 
+                rgba(106, 27, 154, 0.8), 
+                rgba(173, 29, 205, 0.8));
+        }
+
+        @keyframes gradientPulse {
+            0%, 100% {
+                background-size: 100% 100%;
+                opacity: 0.8;
+            }
+            50% {
+                background-size: 200% 200%;
+                opacity: 1;
+            }
+        }
+
+        /* Typography */
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 900;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            letter-spacing: 3px;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .price {
+            font-size: 3rem;
+            text-align: center;
+            margin: 30px 0;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
+        }
+
+        /* Cyberpunk Buttons */
         .btn {
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            border-radius: 8px;
+            padding: 16px 40px;
+            font-size: 1.3rem;
+            border-radius: 10px;
             border: none;
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             transition: all 0.3s;
             font-weight: bold;
+            margin: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0.3),
+                rgba(255,255,255,0)
+            );
+            transform: rotate(30deg);
+            transition: all 0.5s;
         }
 
         .btn:hover {
-            transform: scale(1.05);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 0, 0.5);
         }
 
-        /* Install Button (Black with glow) */
-        .install-btn {
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        .btn:hover::before {
+            left: 100%;
         }
 
-        /* Discord Button (Blue with glow) */
-        .discord-btn {
-            background: linear-gradient(135deg, #5865F2, #7289DA, #5865F2);
-            color: white;
-            box-shadow: 0 0 25px rgba(88, 101, 242, 0.9);
+        .buy-btn {
+            background: linear-gradient(135deg, #00aa00, #00ff00);
+            color: #000;
+            box-shadow: 0 5px 25px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Futuristic Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            align-items: center;
             justify-content: center;
-            margin-top: 15px;
+            backdrop-filter: blur(10px);
         }
 
-        /* ===== ICONS ===== */
-        .windows-icon {
-            width: 20px;
-            height: 20px;
-            filter: brightness(0) invert(1);
+        .modal-content {
+            background: rgba(20, 20, 30, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 50px rgba(88, 101, 242, 0.5);
+            position: relative;
+            overflow: hidden;
         }
 
-        .discord-icon {
-            width: 20px;
-            height: 20px;
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #5865F2, #00ff00, #5865F2);
+        }
+
+        .payment-code {
+            font-size: 2rem;
+            font-family: monospace;
+            letter-spacing: 3px;
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            color: #00ff00;
+            border: 1px dashed rgba(0,255,0,0.3);
         }
     </style>
 </head>
@@ -143,34 +278,138 @@
     <!-- Header -->
     <header class="header">
         <h1>💎 TIRED PREMIUM 💎</h1>
-        <a href="https://discord.gg/yourdiscord" target="_blank" class="top-discord-btn">
-            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord" class="discord-icon">
+        <a href="https://discord.gg/yourlink" class="top-discord-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord" width="24" height="24">
             Discord
         </a>
     </header>
 
-    <!-- Empty Container (Ready for Future Sections) -->
-    <div class="sections-container" style="padding: 15vh 15% 0; margin-bottom: 50px;">
-        <!-- Add your content here later -->
+    <!-- Main Content -->
+    <div class="sections-container">
+        <!-- Weekly Section -->
+        <div class="premium-section">
+            <h2 class="section-title">💎 TIRED PREMIUM 💎</h2>
+            <p class="section-subtitle">weekly</p>
+            <div class="price">$4.99</div>
+            <button class="btn buy-btn" onclick="showPaymentModal('weekly')">
+                <span>🔑</span> Buy Now
+            </button>
+        </div>
+
+        <!-- Lifetime Section -->
+        <div class="premium-section lifetime-section">
+            <h2 class="section-title">💎 TIRED PREMIUM 💎</h2>
+            <p class="section-subtitle">lifetime</p>
+            <div class="price">$9.99</div>
+            <button class="btn buy-btn" onclick="showPaymentModal('lifetime')">
+                <span>🔑</span> Buy Now
+            </button>
+        </div>
     </div>
 
-    <script>
-        // Create stars
-        const starsContainer = document.getElementById('starsContainer');
-        for (let i = 0; i < 150; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            star.style.left = `${Math.random() * 100}%`;
-            star.style.top = `${Math.random() * 100}%`;
-            star.style.width = `${Math.random() * 2 + 1}px`;
-            star.style.height = star.style.width;
-            starsContainer.appendChild(star);
-        }
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <h2 style="text-align: center; margin-bottom: 20px;">💎 PAYMENT INSTRUCTIONS 💎</h2>
+            <p style="text-align: center; font-size: 1.2rem;" id="paymentInstructions">Send $4.99 via PayPal Friends & Family to:</p>
+            <p style="text-align: center; font-size: 1.5rem; margin: 15px 0; word-break: break-all; color: #7289DA;">your@paypal.com</p>
+            <p style="text-align: center;">Include this exact code in the payment notes:</p>
+            <div id="paymentCode" class="payment-code">TPW-000000</div>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="btn buy-btn" onclick="verifyPayment()" style="flex: 1;">
+                    I've Sent Payment
+                </button>
+                <button class="btn" onclick="hideModal()" style="flex: 1; background: linear-gradient(135deg, #ff0000, #aa0000);">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
 
-        // Discord button functionality
-        document.querySelector('.top-discord-btn').addEventListener('click', () => {
-            window.open('https://discord.gg/yourdiscord', '_blank');
-        });
-    </script>
+<script>
+  // 1. Star animation (keep your existing one)
+  function createStars() {
+    const container = document.getElementById('starsContainer');
+    for (let i = 0; i < 200; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.width = `${Math.random() * 3 + 2}px`;
+      star.style.height = star.style.width;
+      star.style.setProperty('--duration', `${Math.random() * 5 + 3}s`);
+      star.style.opacity = Math.random();
+      container.appendChild(star);
+    }
+  }
+
+  // 2. Generate random redemption code (e.g., "TP-5H9X2L")
+  function generateCode() {
+    return 'TP-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+  }
+
+  // 3. PayPal Smart Buttons
+  function setupPayPalButtons() {
+    // Weekly Plan
+    paypal.Buttons({
+      createOrder: (data, actions) => actions.order.create({
+        purchase_units: [{
+          amount: { value: '4.99' },
+          description: 'Weekly Premium Code'
+        }]
+      }),
+      onApprove: (data, actions) => actions.order.capture().then(details => {
+        const code = generateCode();
+        handlePaymentSuccess(details, code, 'weekly');
+      })
+    }).render('#paypal-button-container-weekly');
+
+    // Lifetime Plan
+    paypal.Buttons({
+      createOrder: (data, actions) => actions.order.create({
+        purchase_units: [{
+          amount: { value: '9.99' },
+          description: 'Lifetime Premium Code'
+        }]
+      }),
+      onApprove: (data, actions) => actions.order.capture().then(details => {
+        const code = generateCode();
+        handlePaymentSuccess(details, code, 'lifetime');
+      })
+    }).render('#paypal-button-container-lifetime');
+  }
+
+  // 4. Handle successful payment (send code to backend + user)
+  async function handlePaymentSuccess(details, code, planType) {
+    // Send data to backend
+    const response = await fetch('YOUR_BACKEND_URL/generate-code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: details.payer.email_address,
+        code: code,
+        plan: planType,
+        transaction_id: details.id
+      })
+    });
+
+    if (response.ok) {
+      alert(`Payment successful! Your code: ${code}\nRedeem in Discord via: !redeem ${code}`);
+    } else {
+      alert("Payment succeeded but code generation failed. Contact support.");
+    }
+  }
+
+  // 5. Load PayPal SDK and initialize
+  function init() {
+    createStars();
+    const script = document.createElement('script');
+    script.src = `https://www.paypal.com/sdk/js?client-id=YOUR_SANDBOX_OR_LIVE_CLIENT_ID&currency=USD`;
+    script.onload = setupPayPalButtons;
+    document.head.appendChild(script);
+  }
+
+  init();
+</script>
 </body>
 </html>
