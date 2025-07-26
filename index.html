@@ -360,18 +360,15 @@
                 <p class="warning-text">⚠️ IMPORTANT: You MUST follow these instructions exactly:</p>
                 <p>1. Send payment via <span class="highlight">PayPal Friends & Family</span> only</p>
                 <p>2. Include your <span class="highlight">exact Discord username (username#1234)</span> in the payment note</p>
-                <p>3. Include the code below in the payment note</p>
+                <p>3. After payment, <span class="highlight">open a ticket in our Discord</span> and include the email used for payment</p>
             </div>
             
             <p style="text-align: center; font-size: 1.2rem;">Send <span id="paymentAmount">$4.99</span> via PayPal to:</p>
-            <p style="text-align: center; font-size: 1.5rem; margin: 15px 0; word-break: break-all; color: #7289DA;">zodienr2@gmail.com</p>
-            
-            <p style="text-align: center;">Include this exact code in the payment notes:</p>
-            <div id="paymentCode" class="payment-code" onclick="copyToClipboard()" style="cursor: pointer;" title="Click to copy">TPW-000000</div>
+            <p style="text-align: center; font-size: 1.5rem; margin: 15px 0; word-break: break-all; color: #7289DA;">zodienr3@gmail.com</p>
             
             <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
                 <button class="btn buy-btn" onclick="copyToClipboard(); verifyPayment()" style="flex: 1;">
-                    Copy Code & Verify Payment
+                    I've Sent Payment
                 </button>
                 <button class="btn" onclick="hideModal()" style="flex: 1; background: linear-gradient(135deg, #ff0000, #aa0000);">
                     Cancel
@@ -415,9 +412,6 @@
             // Set amount based on plan
             paymentAmount.textContent = planType === 'weekly' ? '$4.99' : '$9.99';
             
-            // Generate new code
-            paymentCode.textContent = generateCode(planType);
-            
             // Show modal
             modal.style.display = 'flex';
         }
@@ -459,7 +453,7 @@
 
         // Verify payment (placeholder function)
         function verifyPayment() {
-            alert('After sending payment, join our Discord and open a ticket with your PayPal transaction ID for verification.');
+            alert('After sending payment, join our Discord and open a ticket with your PayPal transaction ID and payment email.');
             hideModal();
         }
 
